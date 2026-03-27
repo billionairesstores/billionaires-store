@@ -605,3 +605,22 @@
         </div>
     </div>
 `).join('');
+            }
+
+function updateCartUI() {
+    document.getElementById('cartCount').innerText = cart.length;
+}
+
+function showNotification(msg) {
+    const notif = document.getElementById('notification');
+    notif.innerText = msg;
+    notif.classList.add('show');
+
+    setTimeout(() => {
+        notif.classList.remove('show');
+    }, 2000);
+}
+
+function checkout() {
+    alert("Checkout feature coming soon!");
+}
