@@ -581,46 +581,37 @@
         }
 
         function renderCartItems() {
-            const cartItemsEl = document.getElementById('cartItems');
-            const cartTotalEl = document.getElementById('cartTotal');
-            
-            if (cart.length === 0) {
-                cartItemsEl.innerHTML = `
-                    <div class="empty-cart">
-                        <i class="fas fa-shopping-bag" style="font-size: 4rem; color: #ffd700; margin-bottom: 1rem;"></i>
-                        <h3>Your cart is empty</h3>
-                        <p>Browse our luxury collection</p>
-                    </div>
-                `;
-                cartTotalEl.style.display = 'none';
-                return;
-            }
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartTotalEl = document.getElementById('cartTotal');
 
-           cartItemsEl.innerHTML = cart.map(item => `
-    <div class="cart-item">
-        <div class="cart-item-image">${item.image}</div>
-        <div class="cart-item-info">
-            <h4>${item.name}</h4>
-            <p>$${item.price}</p>
-        </div>
-    </div>
-`).join('');
-            }
+    if (cart.length === 0) {
+        cartItemsEl.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-bag" style="font-size: 4rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                <h3>Your cart is empty</h3>
+                <p>Browse our luxury collection</p>
+            </div>
+        `;
+        cartTotalEl.style.display = 'none';
+        return;
+    }
 
-function updateCartUI() {
-    document.getElementById('cartCount').innerText = cart.length;
-}
+    let total = 0;
 
-function showNotification(msg) {
-    const notif = document.getElementById('notification');
-    notif.innerText = msg;
-    notif.classList.add('show');
+    cartItemsEl.innerHTML = cart.map(item => {
+        total += item.price * item.quantity;
 
-    setTimeout(() => {
-        notif.classList.remove('show');
-    }, 2000);
-}
+        return `
+            <div class="cart-item">
+                <div class="cart-item-image">${item.image}</div>
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p>$${item.price}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
 
-function checkout() {
-    alert("Checkout feature coming soon!");
+    document.getElementById('totalPrice').innerText = total;
+    cartTotalEl.style.display = 'block';
 }
